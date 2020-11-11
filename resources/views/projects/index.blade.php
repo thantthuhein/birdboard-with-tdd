@@ -3,9 +3,9 @@
 @section('content')
 <header class="flex items-center py-4 mb-3">
    <div class="flex justify-between items-end w-full">
-      <h2 class="text-md text-gray-500">My Projects</h2>
+      <h2 class="text-muted">My Projects</h2>
       
-      <a href="{{ route('projects.create') }}" class="button hover:bg-blue-light">New Project</a>
+      <a href="{{ route('projects.create') }}" class="button" @click.prevent="$modal.show('new-project')">New Project</a>
    </div>
 </header>
 
@@ -17,5 +17,7 @@
    @empty
       <div>No Projects Yet.</div>
    @endforelse
+   
+   <new-project-modal></new-project-modal>
 </main>
 @endsection

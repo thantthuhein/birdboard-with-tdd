@@ -56,8 +56,8 @@ class Task extends Model
 
     // Scopes and others
     public function is_completed()
-    {
-        return $this->completed;
+    {        
+        return $this->completed;        
     }
 
     public function is_pending()
@@ -67,7 +67,8 @@ class Task extends Model
 
     public function complete()
     {
-        $this->update(['completed' => true]);
+        
+        $this->update(['completed' => true]);        
     }
 
     public function incomplete()

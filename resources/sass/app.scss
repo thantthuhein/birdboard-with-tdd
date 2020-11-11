@@ -6,7 +6,22 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-// Bootstrap
-// @import '~bootstrap/scss/bootstrap';
-
 @import 'utils';
+
+// Components
+@import 'components/button';
+@import 'components/card';
+@import 'components/dropdown';
+
+// Themes
+@import 'themes/dark';
+@import 'themes/light';
+
+body,
+button {
+     @apply .text-default;
+}
+
+.section {
+     @apply .px-8;
+}

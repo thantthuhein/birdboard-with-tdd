@@ -21,11 +21,19 @@ class InvitationTest extends TestCase
 
         $user = User::factory()->create();
 
+        $assertInvitationForbidden = function() use ($user, $project) {
+            $this->actingAs($user)->post($project->path() . '/invitations')->assertStatus(403);
+        };
         
+        $assertInvitationForbidden();
+
+        $project->invite($user);
+
+        $assertInvitationForbidden();
     }
 
     /** @test */
-    public function a_project_can_invite_a_user()
+    public function a_project_owner_can_invite_a_user()
     {
         $project = ProjectFactory::create();
 
@@ -34,23 +42,25 @@ class InvitationTest extends TestCase
         $this->actingAs($project->owner)
             ->post($project->path() . '/invitations', [
                 'email' => $userToInvite->email
-            ]);
+            ])
+            ->assertRedirect($project->path());
 
         $this->assertTrue($project->members->contains($userToInvite));
     }
 
     /** @test */
-    public function invited_email_must_be_valid()
+    public function invited_email_must_be_birdboard_account()
     {
+        // $this->withoutExceptionHandling();
         $project = ProjectFactory::create();
 
-        $this->actingAs($this->signIn())
+        $this->actingAs($project->owner)
             ->post($project->path() . '/invitations', [
                 'email' => 'invalidemail@example.com'
             ])
             ->assertSessionHasErrors([
-                'email' => 'The invited user must have a account.'
-            ]);
+                'email' => 'The invited user must have an account.'
+            ], null, 'invitations');
     }
 
     /** @test */

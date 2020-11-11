@@ -46,6 +46,11 @@ class Project extends Model
         return $this->tasks()->create(compact('body'));
     }
 
+    public function addManyTasks(array $tasks)
+    {
+        return $this->tasks()->createMany($tasks);
+    }
+
     public function scopeLastUpdatedProjects($query)
     {
         return $query->latest('updated_at')->get();

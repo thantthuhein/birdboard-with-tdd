@@ -22,7 +22,7 @@ class ProjectController extends Controller
     }
 
     public function show(Project $project)
-    {
+    {        
         $this->authorize('update', $project);
 
         return view('projects.show', compact('project'));
@@ -30,7 +30,15 @@ class ProjectController extends Controller
 
     public function store()
     {
-        $project = auth()->user()->projects()->create($this->validateRequest());
+        $project = auth()->user()->projects()->create($this->validateRequest());    
+
+        $tasks = collect(request('tasks'))->whereNotNull('body')->all();
+        
+        if (! empty($tasks)) {
+            $project->addManyTasks($tasks);
+        }
+
+        if (request()->wantsJson()) return ['message' => $project->path()];
 
         return redirect($project->path());
     }
@@ -56,7 +64,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        $this->authorize('update', $project);
+        $this->authorize('manage', $project);
 
         $project->delete();
 

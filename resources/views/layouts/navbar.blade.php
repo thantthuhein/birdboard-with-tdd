@@ -1,42 +1,44 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-     <div class="container mx-auto px-6">
+<nav class="navbar navbar-expand-md navbar-light bg-header shadow-sm">
+     <div class="mx-auto px-6">
           <div class="flex justify-between items-center py-2">
                <a class="navbar-brand text-2xl" href="{{ url('/') }}">
                     @include('layouts.logo')
                </a>
           
-               <div>     
-                    <ul class="navbar-nav ml-auto flex">
-                         <!-- Authentication Links -->
-                         @guest
-                              <li class="nav-item mr-5">
-                                   <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                              </li>
-                              @if (Route::has('register'))
-                                   <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                   </li>
-                              @endif
-                         @else          
-                              <li class="nav-item dropdown flex">
-                                   <a id="navbarDropdown" class="nav-link dropdown-toggle mr-5" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }}
-                                   </a>
-               
-                                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                       document.getElementById('logout-form').submit();">
+               <div class="flex relative">
+                    <!-- Authentication Links -->
+                    @guest
+                         <div class="mr-5">
+                              <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                         </div>
+                         @if (Route::has('register'))
+                              <div>
+                                   <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                              </div>
+                         @endif
+                    @else
+                         <div class="mr-10">
+                              <theme-switcher></theme-switcher>
+                         </div>
+
+                         <div class="flex ml-10">
+                              <dropdown align="right" width="100%">
+                                   <template v-slot:trigger>
+                                        <button class="text-default no-underline text-sm focus:outline-none">
+                                             {{ Auth::user()->name }}
+                                        </button>
+                                   </template>
+
+                                   <button type="submit" form="logout-form" class="dropdown-menu-link focus:outline-none w-full text-left">
                                         {{ __('Logout') }}
-                                        </a>
-               
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                        </form>
-                                   </div>
-                              </li>
-                         @endguest
-                    </ul>
+                                   </button>
+                              </dropdown>
+          
+                              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                              @csrf
+                              </form>
+                         </div>
+                    @endguest
                </div>
           </div>
      </div>

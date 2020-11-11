@@ -1,0 +1,25 @@
+.button {
+     @apply .bg-button .text-white .text-sm .no-underline .rounded-lg .py-2 .px-5;
+     &.is-outlined {
+          @apply .bg-white .border .border-accent .text-accent;
+          &:hover {
+               @apply .bg-blue .text-white;
+          }
+     }     
+
+     .light-theme & {          
+          box-shadow: 0 2px 7px 0 #B0EAFF;
+     }
+
+     .dark-theme & {          
+          box-shadow: 0 2px 7px 0 #00658B;
+     }
+
+     &:hover {
+          @apply .bg-blue-light;
+     }
+
+     &:focus {
+          @apply .outline-none .shadow-outline;
+     }
+}

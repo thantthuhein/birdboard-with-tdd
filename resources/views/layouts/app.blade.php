@@ -19,11 +19,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
+<body class="light-theme bg-page">    
     <div id="app">
         @include('layouts.navbar')        
 
-        <main class="container mx-auto py-4 px-6">
+        <main class="mx-auto py-4 px-6">
             @yield('content')
         </main>
     </div>

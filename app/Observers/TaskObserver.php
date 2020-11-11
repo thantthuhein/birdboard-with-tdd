@@ -25,9 +25,13 @@ class TaskObserver
      * @return void
      */
     public function updated(Task $task)
-    {
-        if ($task->isClean('completed')) return;
+    {        
         $description = $task->is_completed() ? 'task_completed' : 'task_incompleted';
+
+        if ($task->isClean('completed')) {
+            // if there no update in completed attribute, change the activity
+            $description = 'task_updated';
+        }
 
         $task->recordActivity($description);
     }

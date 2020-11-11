@@ -50,29 +50,11 @@ class Activity extends Model
     public function activityDetails()
     {
         $descriptions = collect(config('format.activity.description'));
+        
         // Filter the description match with format config
         $description = $descriptions->filter(fn($description, $key) => $key == $this->description)->first();
 
-        return $this->formatDescription($description);                
-    }
-    
-    public function formatDescription($description)
-    {
-        $ownername = auth()->user()->name;
-
-        if (is_null($this->stateChanges) || $this->description !== 'project_updated') {
-            $task = optional($this->subject)->body
-                        ? "''" . optional($this->subject)->body . "''" 
-                        : '';
-                        
-            return "{$ownername}" . " {$description} " . "{$task}";
-        }
-        
-        // If the user updated only one field, show them specific
-        if (count($this->stateChanges['after']) === 1) {
-            return "{$ownername}" . " Updated the " . ucfirst(key($this->stateChanges['after'])) . " of the Project";
-        }
-
-        return "{$ownername}" . " {$description}";
+        $ownername = $this->user->name;
+        return "{$ownername}" . " {$description}";           
     }
 }

@@ -18,7 +18,7 @@
     </head>
     <body class="bg-gray-100">
         
-        <div class="container mx-auto font-sans text-gray-900 antialiased">
+        <div class="mx-auto font-sans text-gray-900 antialiased">
             {{-- @include('layouts.navbar') --}}
             
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
